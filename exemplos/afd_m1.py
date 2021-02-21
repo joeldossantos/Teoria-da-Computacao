@@ -16,3 +16,6 @@ Delta = {
             ('q3', 0): 'q2',
             ('q3', 1): 'q2'
         }
+
+M1 = (QSet, Sigma, Delta, 'q1', FSet)
+
