@@ -18,8 +18,3 @@ Delta = {
         }
 
 M1 = (QSet, Sigma, Delta, 'q1', FSet)
-
-
-print(tc.delta_hat(M1, 'q1', [1,1,0,1]))
-
-print(tc.aceita(M1, [1,1,0,1]))
