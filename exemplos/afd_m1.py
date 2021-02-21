@@ -16,12 +16,3 @@ Delta = {
             ('q3', 0): 'q2',
             ('q3', 1): 'q2'
         }
-
-M1 = (QSet, Sigma, Delta, 'q1', FSet)
-
-
-print(tc.delta_hat(M1, 'q1', [1,1,0,1]))
-
-print(tc.aceita(M1, [1,1,0,1]))
-
-print(tc.computacao(M1, 'q1', [1,1,0,1]))
