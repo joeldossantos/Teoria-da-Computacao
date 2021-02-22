@@ -18,4 +18,3 @@ Delta = {
         }
 
 M1 = (QSet, Sigma, Delta, 'q1', FSet)
-
