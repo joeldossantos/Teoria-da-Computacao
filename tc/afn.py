@@ -17,3 +17,16 @@ def eclose(automato,estado):
         eclosure = eclosure.union(delta(automato, estados, simbolo))  # Nesta linha o eclosure está utilizando o .union para somar o eclose de cada elemento do set de entrada e guardar na própria variável.
     return eclosure # Será retornado um Set com o resultado da soma do eclose de cada Set de entrada.
 
+# 4 - Delta estendido do AFN
+def delta_hat(automato, estado, palavra):
+    if palavra == []:
+        return estado
+    else:
+        simbolo = palavra.pop()
+        fe = eclose(automato, estado)
+        fn = []
+        for e in fe
+            fn = delta(automato, delta_hat(automato, e, palavra), simbolo) + fn
+        return fn
+#Assim como no AFD a função vai partir do estado inicial recebido e recursivamente chamar a função delta() até o fim da palavra. Porém no AFN deverá calcular o fecho epsilon (fe)
+#para cada estado e posteriormente chamar a função delta() para cada um dos estados preenchendo o vetor de estados encontrados (fn).
