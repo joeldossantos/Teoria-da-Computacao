@@ -24,9 +24,9 @@ def delta_hat(automato, estado, palavra):
     else:
         simbolo = palavra.pop()
         fe = eclose(automato, estado)
-        fn = []
+        fn = set()
         for e in fe
-            fn = delta(automato, delta_hat(automato, e, palavra), simbolo) + fn
+            fn = fn.union(delta(automato, delta_hat(automato, e, palavra), simbolo))
         return fn
 #Assim como no AFD a função vai partir do estado inicial recebido e recursivamente chamar a função delta() até o fim da palavra. Porém no AFN deverá calcular o fecho epsilon (fe)
 #para cada estado e posteriormente chamar a função delta() para cada um dos estados preenchendo o vetor de estados encontrados (fn).
