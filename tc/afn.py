@@ -47,4 +47,38 @@ def aceita(automato, palavra): # palavra é um array com os simbolos. e.g. [1, 0
             return True
     return False
 
+
+# 6 - Computação do autômato
+def computacao(automato, estado, palavra)
+    if palavra == []:
+        # Formatação para elementos finais do autômato
+        return "(" + estado + ", )"
+    else:
+        # Subtrai o simbolo da palavra para uso futuro
+        simbolo, palavra = a[0], a[1:]
+
+        # Obtem a lista de estados partindo do atual
+        estados = delta(automato, estado, simbolo)
+
+        # Instancia o texto do primeiro estado
+        texto_atual = "(" + estado + ", " + printw(palavra) + ") |- "
+
+        # >> Parametros do loop
+        # Mostra se é a primeira execução neste estado
+        primeiro = True
+        # Qtd de caracteres da linha anterior para formatar corretamente
+        len_primeiro_texto = 0
+        
+        # Itera por todos estados possíveis a partir do Delta atual
+        for proximo in estados:
+            # Primeiro elemento deste estado
+            if (primeiro):
+                len_primeiro_texto = len(texto_atual)
+                texto_atual = texto_atual + computacao(automato, proximo, palavra)
+            # Elementos seguintes
+            else:
+                texto_atual = "\n" + (" " * len_primeiro_texto) + computacao(automato, proximo, palavra)
+            primeiro = False
+
+        return texto_atual
     
