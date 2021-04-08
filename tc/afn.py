@@ -48,3 +48,24 @@ def aceita(automato, palavra): # palavra é um array com os simbolos. e.g. [1, 0
     return False
 
     
+# 8 - Transformação AFN para AFD (simplificado)
+def afn2afd_smart(automato):
+  Sigma = automato[1] #Os autômatos devem reconhecer a mesma linguagem, logo o alfabeto é o mesmo para os dois
+  QSet = set()
+  Delta = dict()
+  FSet = set()
+  #Os estados, estados finais e transições ainda precisam ser computados, então os conjuntos são iniciados vazios
+  estadoInicial = eclose(automato, automato[3]) #O estado inicial do autômato não-determinístico é passado como parâmetro para a função Fecho-Epsilon. O estado inicial do autômato determinístico será o mesmo do não-determinístico, ou todos os estados alcançados por transições vazias.
+  QSet.union(estadoInicial)
+  for estado in QSet:
+    for simbolo in Sigma:
+      proximoEstado = set()
+      for elemento in estado: #A ordem dos for aninhados: Para cada estado, que pode ser 1 ou vários elementos, cada símbolo vai gerar 1 transição, para cada um dos elementos.
+        proximoEstado.union(delta(automato, estado, simbolo))
+        for pe in proximoEstado:
+          proximoEstado.union(eclose(pe))
+      if automato[4] in proximoEstado:
+        FSet.union(proximoEstado)
+      Delta[(estado, simbolo)]:proximoEstado
+  automatoDeterministico = (QSet, Sigma, Delta, estadoInicial, FSet)
+  return automatoDeterministico
