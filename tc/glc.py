@@ -4,8 +4,7 @@ def gr2afn(automato):
     V = set()
     T = set()
     P = set()
-    R0 = set()
-    G = (V, T, P, R0)
+    G = (V, T, P, S)
     for terminal in automato[0]:
         T.add(terminal)
     for estado in automato[2]:
@@ -14,3 +13,4 @@ def gr2afn(automato):
         P[estado] = [str(terminal), automato[3].value()]
     for final in automato[2]:
         P[final] = []
+    S = automato[4]
