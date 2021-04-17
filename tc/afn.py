@@ -47,4 +47,59 @@ def aceita(automato, palavra): # palavra é um array com os simbolos. e.g. [1, 0
             return True
     return False
 
+
+# 6 - Computação do autômato
+def computacao(automato, estado, palavra)
+    if palavra == []:
+        # Formatação para elementos finais do autômato
+        return "(" + estado + ", )"
+    else:
+        # Subtrai o simbolo da palavra para uso futuro
+        simbolo, palavra = a[0], a[1:]
+
+        # Obtem a lista de estados partindo do atual
+        estados = delta(automato, estado, simbolo)
+
+        # Instancia o texto do primeiro estado
+        texto_atual = "(" + estado + ", " + printw(palavra) + ") |- "
+
+        # >> Parametros do loop
+        # Mostra se é a primeira execução neste estado
+        primeiro = True
+        # Qtd de caracteres da linha anterior para formatar corretamente
+        len_primeiro_texto = 0
+        
+        # Itera por todos estados possíveis a partir do Delta atual
+        for proximo in estados:
+            # Primeiro elemento deste estado
+            if (primeiro):
+                len_primeiro_texto = len(texto_atual)
+                texto_atual = texto_atual + computacao(automato, proximo, palavra)
+            # Elementos seguintes
+            else:
+                texto_atual = "\n" + (" " * len_primeiro_texto) + computacao(automato, proximo, palavra)
+            primeiro = False
+
+        return texto_atual
     
+# 8 - Transformação AFN para AFD (simplificado)
+def afn2afd_smart(automato):
+  Sigma = automato[1] #Os autômatos devem reconhecer a mesma linguagem, logo o alfabeto é o mesmo para os dois
+  QSet = set()
+  Delta = dict()
+  FSet = set()
+  #Os estados, estados finais e transições ainda precisam ser computados, então os conjuntos são iniciados vazios
+  estadoInicial = eclose(automato, automato[3]) #O estado inicial do autômato não-determinístico é passado como parâmetro para a função Fecho-Epsilon. O estado inicial do autômato determinístico será o mesmo do não-determinístico, ou todos os estados alcançados por transições vazias.
+  QSet.union(estadoInicial)
+  for estado in QSet:
+    for simbolo in Sigma:
+      proximoEstado = set()
+      for elemento in estado: #A ordem dos for aninhados: Para cada estado, que pode ser 1 ou vários elementos, cada símbolo vai gerar 1 transição, para cada um dos elementos.
+        proximoEstado.union(delta(automato, estado, simbolo))
+        for pe in proximoEstado:
+          proximoEstado.union(eclose(pe))
+      if automato[4] in proximoEstado:
+        FSet.union(proximoEstado)
+      Delta[(estado, simbolo)]:proximoEstado
+  automatoDeterministico = (QSet, Sigma, Delta, estadoInicial, FSet)
+  return automatoDeterministico
