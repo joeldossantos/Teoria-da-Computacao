@@ -7,8 +7,10 @@ Windows: py -m pytest unit.py
 
 import exemplos.eclose_afn as exp_eclose
 import exemplos.afn_aceitacao as exp_aceitacao
+import exemplos.prop_lr as prop_lr_exp
 import tc.afd as tc
 import tc.afn as afn
+import tc.prop_lr as prop_lr
 import exemplos.afd_m1 as exp
 
 
@@ -46,3 +48,29 @@ def test_afn_aceita():
     assert afn.aceita(exp_aceitacao.automato, [1,0,1]) == True
     assert afn.aceita(exp_aceitacao.automato, [1,1,0,1]) == True
     assert afn.aceita(exp_aceitacao.automato, [0,1,0,1]) == True
+
+def test_tfa_table():
+    assert prop_lr.tfa_table(exp.M1) == \
+        [
+            ['q1', 'q2', ''],
+            ['q1', 'q3', ''],
+            ['q2', 'q3', ''],
+        ]
+    assert prop_lr.tfa_table(prop_lr_exp.automato) == \
+        [
+            ['q0', 'q1', ''],
+            ['q0', 'q2', ''],
+            ['q0', 'q3', ''],
+            ['q0', 'q4', ''],
+            ['q0', 'q5', ''],
+            ['q1', 'q2', ''],
+            ['q1', 'q3', ''],
+            ['q1', 'q4', ''],
+            ['q1', 'q5', ''],
+            ['q2', 'q3', ''],
+            ['q2', 'q4', ''],
+            ['q2', 'q5', ''],
+            ['q3', 'q4', ''],
+            ['q3', 'q5', ''],
+            ['q4', 'q5', '']
+        ]

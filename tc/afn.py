@@ -49,7 +49,7 @@ def aceita(automato, palavra): # palavra é um array com os simbolos. e.g. [1, 0
 
 
 # 6 - Computação do autômato
-def computacao(automato, estado, palavra)
+def computacao(automato, estado, palavra):
     if palavra == []:
         # Formatação para elementos finais do autômato
         return "(" + estado + ", )"
