@@ -57,3 +57,22 @@ def printw(expreg):
             
         else:    
             return "".join(str(expreg[-1]) + str(operator))
+
+#Implementação 15
+#@Ricardo Buçard de Castro
+
+afn2er_qi(automato, estado):
+  estados_anteriores = set()
+  indice = 0
+  encontrado = False
+  listaDelta = list(automato[3].values())
+  for chave in automato[3]:
+    if encontrado == False:
+      estados_anteriores.add(chave[0])
+      for estado_destino in listaDelta[indice]:
+        if estado == estado_destino:
+          encontrado = True
+          break
+      indice+=1
+    else:
+      break
