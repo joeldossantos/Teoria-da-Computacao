@@ -76,3 +76,19 @@ afn2er_qi(automato, estado):
       indice+=1
     else:
       break
+    
+# 16
+# Dennis Santos Rodrigues
+
+def afn2er_pi(automato, estado):
+    values = list(automato[2].values())
+    num = 0
+    posterior = set()
+
+    for funcao in automato[2]:
+        if estado in funcao:
+            for e in values[num]:
+                if e != estado:
+                 posterior.add(e)
+        num += 1
+    return posterior
