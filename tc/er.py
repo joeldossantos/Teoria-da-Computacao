@@ -61,7 +61,7 @@ def printw(expreg):
 #Implementação 15
 #@Ricardo Buçard de Castro
 
-afn2er_qi(automato, estado):
+def afn2er_qi(automato, estado):
   estados_anteriores = set()
   indice = 0
   encontrado = False
