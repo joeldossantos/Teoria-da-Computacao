@@ -76,3 +76,28 @@ afn2er_qi(automato, estado):
       indice+=1
     else:
       break
+    
+    
+# 17
+# Dennis Rodrigues
+
+# 17
+# Dennis Rodrigues
+def afn2er_rij(automato, estado, anterior, posterior):
+
+    if estado != anterior and estado != posterior:
+        values = list(automato[2].values())
+        tuplas = []
+        num = 0
+
+        for funcao in automato[2]:
+            if estado in funcao:
+                for e in values[num]:
+                    if e == posterior:
+                        simbolo = funcao[1]
+                        tuplas.append(tuple((anterior, simbolo)))
+            num += 1
+
+        return tuplas
+    else:
+        return 'O estado passado nao pode ser antecessor/posterior de si mesmo.'
