@@ -12,3 +12,19 @@ def tfa_table(automato):
             table.append([estado1, estado2, ''])
     
     return table
+
+
+def tfa(automato):
+    
+    t = tfa_table(automato)
+    table = tfa_fill(automato,t)
+    y = []
+    
+    for x in table:
+        if(x[2] == ''):
+            y.append([x[0],x[1]])
+
+    eq = set(tuple(i) for i in y)
+    return eq
+
+
