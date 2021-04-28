@@ -91,3 +91,50 @@ def afn2er_pi(automato, estado):
             posterior.add(values[num])
         num += 1
     return posterior
+# 13 - Transformação ER para AFN (4)
+# Claudio Freitas
+# Entrada [item1,item2, (item3, item4),...itemN]
+def er2afn_kleene(expreg):
+    afn = {}
+    posAtual = 0
+    while posAtual < len(expreg):
+        posAtual = posAtual + 1
+        estadoDePara = ('q' + str(posAtual -1), expreg[posAtual])
+        nomeDoEstadoPara = ('q' + str(posAtual))
+        afn[estadoDePara] = nomeDoEstadoPara
+    i = 1
+    for i in posAtual:
+        if ('q' + str(i), 0) not in afn:
+            afn[('q' + str(i), 0)] = 'q' + str(i)
+        if ('q' + str(i), 1) not in afn:
+            afn[('q' + str(i), 1)] = 'q' + str(i)
+    return afn
+
+# 14 - Transformacao ER para AFN (5)
+# Claudio Freitas
+# Entrada [item1,item2, (item3, item4),...itemN]
+def er2afn(expreg):
+    posAtual = 0
+    while posAtual < len(expreg):
+        atual = expreg[posAtual]
+        posAtual = posAtual + 1
+        if len(str(atual)) >= 2:
+            if atual[0] == ' ' or atual[0] == 'epsilon':
+               er2afn_base(expreg)
+               break
+            elif atual[0] == '+':
+               er2afn_union('['+atual[0]+','+expreg[posAtual]+']')
+            elif atual[0] == '*' and len(atual) > 2:
+               er2afn_concat('['+atual[0]+','+expreg[posAtual]+']')
+            elif atual[0] == "*" and len(atual) == 2:
+               er2afn_kleene('['+atual[0]+','+expreg[posAtual]+']')
+        else:
+            if atual[0] == ' ' or atual[0] == 'epsilon':
+               er2afn_base(expreg)
+               break
+            if atual == '+':
+               er2afn_union('['+atual+','+expreg[posAtual]+']')
+            elif atual == '*' and len(atual) > 2:
+               er2afn_concat('['+atual+','+expreg[posAtual]+']')
+            elif atual == "*" and len(atual) == 2:
+               er2afn_kleene('['+atual+','+expreg[posAtual]+']')
