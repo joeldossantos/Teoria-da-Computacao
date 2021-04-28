@@ -61,7 +61,7 @@ def printw(expreg):
 #Implementação 15
 #@Ricardo Buçard de Castro
 
-afn2er_qi(automato, estado):
+def afn2er_qi(automato, estado):
   estados_anteriores = set()
   indice = 0
   encontrado = False
@@ -76,3 +76,18 @@ afn2er_qi(automato, estado):
       indice+=1
     else:
       break
+
+# Implementação 16
+# Dennis Santos Rodrigues
+
+
+def afn2er_pi(automato, estado):
+    values = list(automato[2].values())
+    num = 0
+    posterior = set()
+
+    for funcao in automato[2]:
+        if estado in funcao and values[num] != estado:
+            posterior.add(values[num])
+        num += 1
+    return posterior
