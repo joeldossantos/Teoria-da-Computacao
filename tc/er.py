@@ -89,8 +89,8 @@ def afn2er_qi(automato, estado):
   estados_anteriores = set()
   indice = 0
   encontrado = False
-  listaDelta = list(automato[3].values())
-  for chave in automato[3]:
+  listaDelta = list(automato[2].values())
+  for chave in automato[2]:
     if encontrado == False:
       estados_anteriores.add(chave[0])
       for estado_destino in listaDelta[indice]:
