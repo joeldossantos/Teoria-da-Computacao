@@ -1,3 +1,36 @@
+#10 Transformação ER para AFN (1)
+#Lucas de Andrade Fernandes Leite
+
+def er2afn_base(expreg):
+
+    if type(expreg) is tuple:
+        expreg = expreg[0]
+    QSet = {} 
+    Sigma = {}
+    Delta = {}
+    FSet = {}
+    if expreg in {'0', '1'}:
+        QSet = {'q1', 'q2'}
+        FSet = {'q2'}
+        Sigma = {'0', '1'}
+        Delta = {
+            ('q1', expreg): 'q2'
+        }
+    elif expreg = '':
+        QSet = {'q1'}
+        FSet = {'q1'}
+        Sigma = {'0', '1'}
+        Delta = {}
+    elif not expreg:
+        QSet = {'q1'}
+        FSet = {}
+        Sigma = {'0', '1'}
+        Delta = {}
+
+    automato = (QSet, Sigma, Delta, 'q1', FSet)
+
+    return automato
+
 #11 Transformação ER para AFN (2)
 # Matheus Santos Melo
 
