@@ -86,7 +86,7 @@ def anulaveis(gramatica):
     return variaveis_vazias
 
 
-# 35 - Descoberta de Variáveis Anuláveis
+# 35 - Eliminação de Produções Vazias
 # Claudio Freitas
 def remove_vazias(gramatica):
     producoes = gramatica[2]
