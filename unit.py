@@ -7,10 +7,12 @@ Windows: py -m pytest unit.py
 
 import exemplos.eclose_afn as exp_eclose
 import exemplos.afn_aceitacao as exp_aceitacao
+import exemplos.ap as exp_ap
 import exemplos.prop_lr as prop_lr_exp
 import tc.afd as tc
 import tc.afn as afn
 import tc.prop_lr as prop_lr
+import tc.ap as ap
 import exemplos.afd_m1 as exp
 
 
@@ -75,6 +77,7 @@ def test_tfa_table():
             ['q4', 'q5', '']
         ]
 
+# Este teste não está passando, por favor corrigir
 def test_tfa_fill():
     assert prop_lr.tfa_fill(prop_lr_exp.automato) == \
         [
@@ -94,3 +97,7 @@ def test_tfa_fill():
             ['q3', 'q5', 'i'],
             ['q4', 'q5', 'd']
         ]
+
+def test_ap_delta():
+    assert ap.delta(exp_ap.M, 'q0', '1', 'X') == ('q1', ['X', 'X'])
+    assert ap.delta(exp_ap.M, 'q0', '0', 'X') == ('q0', [])
