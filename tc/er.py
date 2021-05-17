@@ -190,3 +190,23 @@ def afn2er_rij(automato, estado, anterior, posterior):
     else:
         return 'O estado passado nao pode ser antecessor/posterior de si mesmo.'
 
+#Implementacao 18
+#@Pedro Henrique Gomes Telles
+def afn2er_s(automato, estado):
+    anteriores = afn2er_qi(automato, estado)
+    posteriores = afn2er_pi(automato, estado)
+    
+
+    for ant in anteriores:
+        if estado != ant:
+            for pos in posteriores:
+                if estado != pos:
+                    automato[2][afn2er_rij(automato, estado, ant, pos)] = {pos}
+    
+    automato[0].remove(estado)
+    for k, v in automato[2]:
+        if estado in k:
+            automato[2].pop(k)
+        if estado == v:
+            automato[2].pop(k)
+    
