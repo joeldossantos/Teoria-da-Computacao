@@ -1,6 +1,6 @@
 ﻿### Transformação de AF para GR
 
-   def afd2gr(automato):
+def afd2gr(automato):
     V = set()
     T = set()
     P = set()
@@ -67,6 +67,7 @@ def regular(gramatica):
     else:
         return 'A gramatica nao e regular.'
 
+
 # 34 - Descoberta de Variáveis Anuláveis
 # Claudio Freitas
 def anulaveis(gramatica):
@@ -97,3 +98,35 @@ def remove_vazias(gramatica):
                 producoes.pop(key)
     gramatica[2] = producoes
     return gramatica
+
+
+def fng_e1(gramatica):
+    # TODO
+    return gramatica
+
+def fng_e2(gramatica):
+    # TODO
+    return gramatica
+
+def fng_e3(gramatica):
+    # TODO
+    return gramatica
+
+def fng_e4(gramatica):
+    # TODO
+    return gramatica
+
+def fng(gramatica):
+    # 1 - Renomeia as variáveis em forma crescente
+    etapa1 = fng_e1(gramatica)
+
+    # 2 - Garantir que r é menor ou igual a s, ou seja, ( A_r -> [A_s, α] ) | r <= s
+    etapa2 = fng_e2(etapa1)
+
+    # 3 - Remover recursão a esquerda das produções ( A_r -> [A_s, α] )
+    etapa3 = fng_e3(etapa2)
+
+    # 4 - Colocar as produções com terminal no início do lado direito
+    etapa4 = fng_e4(etapa3)
+
+    return etapa4
