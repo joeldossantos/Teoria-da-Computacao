@@ -1,4 +1,4 @@
-### Transformação de AF para GR
+﻿### Transformação de AF para GR
 
    def afd2gr(automato):
     V = set()
@@ -66,3 +66,34 @@ def regular(gramatica):
         return 'A gramatica e regular a direita.'
     else:
         return 'A gramatica nao e regular.'
+
+# 34 - Descoberta de Variáveis Anuláveis
+# Claudio Freitas
+def anulaveis(gramatica):
+    producoes = gramatica[2]
+    variaveis_vazias = []
+    for key in producoes:
+        if len(producoes[key]) == 0:
+            variaveis_vazias.append(key)
+        elif type(producoes[key]) == tuple:
+            for i in producoes[key]:
+                if i == '':
+                    variaveis_vazias.append(key)
+                elif i in variaveis_vazias:
+                    variaveis_vazias.append(key)
+        elif len(producoes.get(key)) == 1 and i in variaveis_vazias:
+            variaveis_vazias.append(key)
+    return variaveis_vazias
+
+
+# 35 - Eliminação de Produções Vazias
+# Claudio Freitas
+def remove_vazias(gramatica):
+    producoes = gramatica[2]
+    variaveis_vazias = anulaveis(producoes)
+    for i in variaveis_vazias:
+        for key in producoes:
+            if key == i:
+                producoes.pop(key)
+    gramatica[2] = producoes
+    return gramatica
