@@ -130,3 +130,11 @@ def fng(gramatica):
     etapa4 = fng_e4(etapa3)
 
     return etapa4
+
+def vazia(gramatica): 
+    simbolos_geradores = geradores(gramatica)
+    simbolo_inicial = gramatica[3]
+    if (simbolo_inicial not in simbolos_geradores):
+        print("A GLC é vazia")
+    else:
+        print("A GLC não é vazia")
