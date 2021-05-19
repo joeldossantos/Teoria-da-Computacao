@@ -131,6 +131,7 @@ def fng(gramatica):
 
     return etapa4
 
+
 #Implementação número 25
 #Aluno: Ricardo Buçard de Castro
 def lmd(gramatica, palavra):
@@ -224,3 +225,12 @@ def rmd(gramatica, palavra):
         producao = s
         mensagem += " => " + producao
     return mensagem
+
+
+def vazia(gramatica): 
+   simbolos_geradores = geradores(gramatica)
+   simbolo_inicial = gramatica[3]
+   if (simbolo_inicial not in simbolos_geradores):
+      print("A GLC é vazia")
+   else:
+      print("A GLC não é vazia")
