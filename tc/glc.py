@@ -91,7 +91,7 @@ def anulaveis(gramatica):
 # Claudio Freitas
 def remove_vazias(gramatica):
     producoes = gramatica[2]
-    variaveis_vazias = anulaveis(producoes)
+    variaveis_vazias = anulaveis(gramatica)
     for i in variaveis_vazias:
         for key in producoes:
             if key == i:
