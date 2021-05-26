@@ -242,4 +242,23 @@ def afn2er_s(automato, estado):
             automato[2].pop(k)
         if estado == v:
             automato[2].pop(k)
+
+#Implementação 19
+#@Pedro Henrique Gomes Telles
+def afn2er(automato):
+    estado_ini = automato[3]
+    estado_fim = automato[4]
+    for estado in automato[0]:
+        if estado != estado_ini and estado != estado_fim:
+            afn2er_s(automato, estado)
     
+    if estado_ini not in automato[2][estado_ini].value:
+        expreg = automato[2][estado_ini][1]
+
+    if estado_ini in automato[2][estado_ini].value:
+        expreg = ('*', automato[2][estado_ini][1]) + expreg
+
+    if estado_fim in automato[2][estado_fim].value:
+        expreg += (('*', automato[2][estado_fim][1]))
+
+    return expreg
