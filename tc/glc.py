@@ -32,6 +32,70 @@ def regular(gramatica):
     producoes = gramatica[2]
     terminais = gramatica[1]
     variaveis = gramatica[0]
+    
+    ## 29 Transformação de GR para AF (Autômato com Pilha) - Rodrigo Meira Lima de Campos
+
+def gr2afn(gramatica):
+    variaveis = gramatica[0] 
+    terminais = gramatica[1] 
+    producoes = gramatica[2]
+    f_transicao = {}
+    i = 0
+
+    for v in variaveis: 
+        f_transicao[('q', ' ', v)] = set() 
+        for p in producoes: 
+            if(p[0] == v):
+               # print('Funcao de transicao para', v)
+                derivacoes = p[1]   
+                for d in derivacoes: 
+                    conjunto = f_transicao[('q', ' ', v)]
+                    conjunto.add(('q', d))
+                    f_transicao[('q', ' ', v)] = conjunto
+                    i += 1
+
+    for t in terminais:
+        f_transicao[('q', t, t)] = ('q', ' ') 
+        #conjunto = f_transicao[('q', t, t)]
+       # conjunto.add()
+                
+    pilha = ({'q'}, terminais, variaveis.union(terminais), f_transicao, gramatica[3])
+    return pilha
+
+## 42 Forma Normal de Greibach - Passo 2 - Rodrigo Meira Lima de Campos
+
+def fng_e2(gramatica):
+    variaveis = gramatica[0]
+    terminais = gramatica[1]
+    producoes = gramatica[2]
+    inicio = gramatica[3]
+   
+
+    for t in producoes: 
+        var1 = t[0] 
+        var2 = t[1] 
+        for s in var2: 
+            r = int(var1[1])
+            sub = ''
+            for j in s: 
+                sub = sub + j 
+                if str.isdigit(j): 
+                    s = int(j)
+                    if r > s: 
+                        for j2 in var2: 
+                                if str(s) in j2:
+                                    tupla_direita = t[1] 
+                                    for i in range(0,len(tupla_direita)): 
+                                        temp = tupla_direita[i] 
+                                       
+                                        
+                                    
+                                    
+                    else:
+                        break 
+
+    return gramatica = (variaveis, terminais, producoes, 'A1')
+
 
     regular_direita = False
     regular_esquerda = False
