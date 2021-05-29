@@ -88,7 +88,7 @@ def computacaoComParada(mt, palavra):
       print('Movimentando a cabeça de leitura para direita')
     elif direcao == 'L':
       if(cabecaLeitura == 0):
-        lst = ['B'] + lst
+        lst = [branco] + lst
       else:
         cabecaLeitura = cabecaLeitura - 1
       print('Movimentando a cabeça de leitura para esquerda')
@@ -97,14 +97,14 @@ def computacaoComParada(mt, palavra):
       print('Mantendo a cabeça de leitura parada')
 
     if(cabecaLeitura > len(lst)-1):
-      lst.append('B')
+      lst.append(branco)
     print('Cabeca leitura', cabecaLeitura)
     print('Fita: ', lst)
 
   palavraFinal = ''
   if(aceito):
     for l in lst:
-      if l != 'B':
+      if l != branco:
         palavraFinal = palavraFinal + l
 
   print('Posicao cabecaLeitura: ', cabecaLeitura)
