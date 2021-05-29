@@ -14,6 +14,9 @@ import tc.afn as afn
 import tc.prop_lr as prop_lr
 import tc.ap as ap
 import exemplos.afd_m1 as exp
+import tc.mt as mt
+import exemplos.mt as mt_exp
+
 
 
 def test_delta_hat():
@@ -107,3 +110,13 @@ def test_tfa_fill():
 def test_ap_delta():
     assert ap.delta(exp_ap.M, 'q0', '1', 'X') == ('q1', ['X', 'X'])
     assert ap.delta(exp_ap.M, 'q0', '0', 'X') == ('q0', [])
+
+def test_mt_computacao_com_parada():
+    assert mt.computacaoComParada(mt_exp.M1, mt_exp.palavra) == ('0101001', True)
+    assert mt.computacaoComParada(mt_exp.M1, mt_exp.palavra) != ('0101000', True)
+
+    assert mt.computacaoComParada(mt_exp.M2, mt_exp.palavra) == ('0110101', True)
+    assert mt.computacaoComParada(mt_exp.M2, mt_exp.palavra) != ('0101000', True)
+
+    assert mt.computacaoComParada(mt_exp.M3, mt_exp.palavra) == ('0110101', True)
+    assert mt.computacaoComParada(mt_exp.M3, mt_exp.palavra) != ('0101000', True)
