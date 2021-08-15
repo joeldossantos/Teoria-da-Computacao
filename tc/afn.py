@@ -5,8 +5,8 @@ Autômato Finito Não Determinístico (AFN)
 def delta(automato, estado, simbolo):
     try:
         return automato[2][(estado, simbolo)]
-    except KeyError:
-        return {}
+    except:
+        return {None} 
 
 
 # o retorno é uma lista de estados
@@ -19,7 +19,8 @@ def eclose(automato,estado):
     eclosure = set()   # Nesta linha foi criado um set vazio eclosure = { }
     for estados in estado:   # Este for serve para percorrer cada estado presente no Set de entrada(estado), seja eles Set1 ou Set2, por exemplo.
         eclosure = eclosure.union({estados}) # @Conrado Luiz Pela definição: q ∈ ECLOSE(q)
-        eclosure = eclosure.union(delta(automato, estados, simbolo))  # Nesta linha o eclosure está utilizando o .union para somar o eclose de cada elemento do set de entrada e guardar na própria variável.
+        if(delta(automato,estados,simbolo) != {None}): # @Luíza Oliveira Consertando problema quando não existe nenhuma transição vazia no Autômato
+            eclosure = eclosure.union(delta(automato, estados, simbolo))  # Nesta linha o eclosure está utilizando o .union para somar o eclose de cada elemento do set de entrada e guardar na própria variável.
     return eclosure # Será retornado um Set com o resultado da soma do eclose de cada Set de entrada.
 
 # 4 - Delta estendido do AFN
