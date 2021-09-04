@@ -16,7 +16,7 @@ def er2afn_base(expreg):
         Delta = {
             ('q1', expreg): 'q2'
         }
-    elif expreg = '':
+    elif expreg == '':
         QSet = {'q1'}
         FSet = {'q1'}
         Sigma = {'0', '1'}
@@ -61,7 +61,7 @@ def er2afn_union(expreg):
 def er2afn_concat(expreg):
     dicio_afn = {}
     cont = 1
-    for cont in len(expreg):
+    for cont in range(0,len(expreg)):
         atual = expreg[cont]
         if atual is tuple:
             if atual[0] == '+':
