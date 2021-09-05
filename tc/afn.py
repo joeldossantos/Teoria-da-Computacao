@@ -20,12 +20,12 @@ def eclose(automato,estados):
 
     simbolo = ''   # O simbolo possui valor '' para definir como se fosse um épsilon.
     eclosure = set()   # Nesta linha foi criado um set vazio eclosure = { }
+
     for estado in estados:   # Este for serve para percorrer cada estado presente no Set de entrada(estado), seja eles Set1 ou Set2, por exemplo.
         eclosure = eclosure.union({estado}) # @Conrado Luiz Pela definição: q ∈ ECLOSE(q)
         if(delta(automato,estado,simbolo) != {None}): # @Luíza Oliveira Consertando problema quando não existe nenhuma transição vazia no Autômato
             eclosure = eclosure.union(delta(automato, estado, simbolo))  # Nesta linha o eclosure está utilizando o .union para somar o eclose de cada elemento do set de entrada e guardar na própria variável.
             eclosure = eclosure.union(eclose(automato, delta(automato, estado, simbolo)))  # Nesta linha o eclosure está utilizando o .union para somar o eclose de cada elemento do set de entrada e guardar na própria variável.
-    
     
     return eclosure # Será retornado um Set com o resultado da soma do eclose de cada Set de entrada.
 
