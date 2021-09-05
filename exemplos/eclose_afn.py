@@ -15,6 +15,6 @@ Delta = {
             ('f','y'): {'d'},
             ('g',''): {'g'},
  }
-M1 = (QSet, Sigma, Delta, 'q1', FSet)
+M1 = (QSet, Sigma, Delta, 'a', FSet)
 
  #print(eclose(M1,ESet))
