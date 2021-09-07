@@ -14,13 +14,22 @@ def delta(automato, estado, simbolo):
 
 # 3 - Fecho-Epsilon
 # A função eclose pode receber um estado com apenas um elemento (Set1 = 'a') ou um conjunto de elementos (Set2 = 'a','b','c','d').
-def eclose(automato,estado):
+def eclose(automato,estados):
+    if estados == {None}:
+        return {}
+
     simbolo = ''   # O simbolo possui valor '' para definir como se fosse um épsilon.
     eclosure = set()   # Nesta linha foi criado um set vazio eclosure = { }
-    for estados in estado:   # Este for serve para percorrer cada estado presente no Set de entrada(estado), seja eles Set1 ou Set2, por exemplo.
-        eclosure = eclosure.union({estados}) # @Conrado Luiz Pela definição: q ∈ ECLOSE(q)
-        if(delta(automato,estados,simbolo) != {None}): # @Luíza Oliveira Consertando problema quando não existe nenhuma transição vazia no Autômato
-            eclosure = eclosure.union(delta(automato, estados, simbolo))  # Nesta linha o eclosure está utilizando o .union para somar o eclose de cada elemento do set de entrada e guardar na própria variável.
+
+    for estado in estados:   # Este for serve para percorrer cada estado presente no Set de entrada(estado), seja eles Set1 ou Set2, por exemplo.
+        eclosure = eclosure.union({estado}) # @Conrado Luiz Pela definição: q ∈ ECLOSE(q)
+        if(delta(automato,estado,simbolo) != {None}): # @Luíza Oliveira Consertando problema quando não existe nenhuma transição vazia no Autômato
+            delta_estado = delta(automato, estado, simbolo)
+            eclosure = eclosure.union(delta_estado)  # Nesta linha o eclosure está utilizando o .union para somar o eclose de cada elemento do set de entrada e guardar na própria variável.
+            delta_estado_transicoes = delta_estado.copy().remove(estado) # Para sair da recursao caso a transição epsilon para o estado tenha sido declarada 
+            if delta_estado_transicoes is not None:
+                eclosure = eclosure.union(eclose(automato, delta_estado.copy().remove(estado)))  # Nesta linha o eclosure está utilizando o .union para somar o eclose de cada elemento do set de entrada e guardar na própria variável.
+    
     return eclosure # Será retornado um Set com o resultado da soma do eclose de cada Set de entrada.
 
 # 4 - Delta estendido do AFN
@@ -28,13 +37,21 @@ def delta_hat(automato, estado, palavra):
     if palavra == []:
         return estado
     else:
-        simbolo = palavra.pop()
+        palavra_copy = palavra.copy()
+        simbolo = palavra_copy.pop()
         fe = eclose(automato, estado)
         fn = set()
         for e in fe:
-            estados = delta_hat(automato, {e}, palavra)
+            estados = delta_hat(automato, {e}, palavra_copy)
             deltas = [delta(automato, estado, simbolo) for estado in estados]
             fn = fn.union(*deltas)
+
+        fn_copy = fn.copy()
+        
+        for f in fn_copy:
+            if f is not None:
+                fn = fn.union(eclose(automato, {f}))
+        # print("Estados finais", fn)
         return fn
 #Assim como no AFD a função vai partir do estado inicial recebido e recursivamente chamar a função delta() até o fim da palavra. Porém no AFN deverá calcular o fecho epsilon (fe)
 #para cada estado e posteriormente chamar a função delta() para cada um dos estados preenchendo o vetor de estados encontrados (fn).
@@ -101,6 +118,6 @@ def afn2afd_smart(automato):
           proximoEstado.union(eclose(pe))
       if automato[4] in proximoEstado:
         FSet.union(proximoEstado)
-      Delta[(estado, simbolo)]:proximoEstado
+      Delta[(estado, simbolo)] = proximoEstado
   automatoDeterministico = (QSet, Sigma, Delta, estadoInicial, FSet)
   return automatoDeterministico
