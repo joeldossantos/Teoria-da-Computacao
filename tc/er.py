@@ -28,7 +28,6 @@ def er2afn_base(simbolo):
             (f'i{count_i}', ''):{f'f{count_i}'}
         }
         FSet = {f'f{count_i}'}
-
         return (QSet, Sigma, Delta, f'i{count_i}', FSet)
 
     else:
