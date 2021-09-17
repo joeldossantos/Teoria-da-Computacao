@@ -14,3 +14,7 @@ def test_afn2er_rij():
 
 def test_afn2er_s():
     assert afn2er_s(automato, "q0") == {('q1', 1): {'q2'}}
+
+def test_afn2er():
+    automato_afn = ({'f1', 'i2', 'f3', 'f2', 'i1', 'i3'}, {'0', '1'}, {('i3', ''): {'i2', 'i1'}, ('f1', ''): {'f3'}, ('f2', ''): {'f3'}, ('i1', '1'): {'f1'}, ('i2', '0'): {'f2'}}, 'i3', {'f3'})
+    assert afn2er(automato_afn) == ("+", "1", "0")
