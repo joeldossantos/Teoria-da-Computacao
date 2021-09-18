@@ -1,6 +1,7 @@
 import tc.prop_lr as prop_lr
 import exemplos.afd_m1 as exp
 import exemplos.prop_lr as prop_lr_exp
+import modelos as modelos
 
 def test_tfa_fill():
     assert prop_lr.tfa_fill(exp.M1) == \
@@ -26,4 +27,12 @@ def test_tfa_fill():
             ('q3', 'q4'): 'd',
             ('q3', 'q5'): 'd',
             ('q4', 'q5'): 'i'
+        }
+
+    # Gustavo Pettine
+    assert prop_lr.tfa_fill(modelos.modelo1) == \
+        {
+            ('q1', 'q2'): 'd', 
+            ('q1', 'q3'): 'd', 
+            ('q2', 'q3'): 'd'
         }
