@@ -13,3 +13,5 @@ def test_tfa():
 
     # Gustavo Pettine
     assert prop_lr.tfa(modelos.modelo1) == set()
+
+    assert prop_lr.tfa(modelos.modelo2) == set()
