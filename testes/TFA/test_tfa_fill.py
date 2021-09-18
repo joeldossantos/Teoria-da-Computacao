@@ -43,3 +43,13 @@ def test_tfa_fill():
             ('q0', 'q2'): 'd', 
             ('q1', 'q2'): 'd'
         }
+    
+    assert prop_lr.tfa_fill(modelos.modelo3) == \
+        {
+            ('q0', 'q1'): 'd', 
+            ('q0', 'q2'): 'd', 
+            ('q0', 'q3'): 'd', 
+            ('q1', 'q2'): 'd', 
+            ('q1', 'q3'): 'd', 
+            ('q2', 'q3'): 'd'
+        }

@@ -25,3 +25,16 @@ Delta = {
         }
 
 modelo2 = (QSet, Sigma, Delta, 'q0', FSet)
+
+Sigma = {0, 1}
+QSet = {'q0', 'q1', 'q2', 'q3'}
+FSet = {'q3'}
+Delta = {
+            ('q0', 0): 'q0',
+            ('q0', 1): 'q1',
+            ('q1', 0): 'q1',
+            ('q1', 1): 'q2',
+            ('q2', 1): 'q3'
+        }
+
+modelo3 = (QSet, Sigma, Delta, 'q0', FSet)
