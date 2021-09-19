@@ -1,4 +1,6 @@
 import tc.er as er
+import os
+
 
 #implementação
 #aluno: Vinicius Tavares dos Santos Nunes
@@ -32,3 +34,5 @@ def teste_er2af():
     print('concatenação:', c)
     print('união: ', d)
     print('concatenação final: ', e)
+    
+os.system('python -m pytest testes -vv')
