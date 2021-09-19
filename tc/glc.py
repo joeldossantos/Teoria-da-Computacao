@@ -1,4 +1,4 @@
-﻿### Transformação de AF para GR
+﻿# Transformação de AF para GR
 
 def afd2gr(automato):
     V = set()
@@ -16,13 +16,13 @@ def afd2gr(automato):
         aux = set(conjunto_estado)
         V.add(estado)
     for chave in automato[2]:
-        conjunto_producoes = [(chave[0],(chave[1],listaDelta[indice]))]
+        conjunto_producoes = [(chave[0], (chave[1], listaDelta[indice]))]
         aux = set(conjunto_producoes)
         P.update(aux)
-        indice+=1
+        indice += 1
     for final in automato[4]:
-        conjunto_terminais = [(final,'')]
-        aux = set(conjunto_terminais) 
+        conjunto_terminais = [(final, '')]
+        aux = set(conjunto_terminais)
         P.update(conjunto_terminais)
 
 
@@ -32,70 +32,69 @@ def regular(gramatica):
     producoes = gramatica[2]
     terminais = gramatica[1]
     variaveis = gramatica[0]
-    
-    ## 29 Transformação de GR para AF (Autômato com Pilha) - Rodrigo Meira Lima de Campos
+
+    # 29 Transformação de GR para AF (Autômato com Pilha) - Rodrigo Meira Lima de Campos
+
 
 def gr2afn(gramatica):
-    variaveis = gramatica[0] 
-    terminais = gramatica[1] 
+    variaveis = gramatica[0]
+    terminais = gramatica[1]
     producoes = gramatica[2]
     f_transicao = {}
     i = 0
 
-    for v in variaveis: 
-        f_transicao[('q', ' ', v)] = set() 
-        for p in producoes: 
+    for v in variaveis:
+        f_transicao[('q', ' ', v)] = set()
+        for p in producoes:
             if(p[0] == v):
                # print('Funcao de transicao para', v)
-                derivacoes = p[1]   
-                for d in derivacoes: 
+                derivacoes = p[1]
+                for d in derivacoes:
                     conjunto = f_transicao[('q', ' ', v)]
                     conjunto.add(('q', d))
                     f_transicao[('q', ' ', v)] = conjunto
                     i += 1
 
     for t in terminais:
-        f_transicao[('q', t, t)] = ('q', ' ') 
+        f_transicao[('q', t, t)] = ('q', ' ')
         #conjunto = f_transicao[('q', t, t)]
        # conjunto.add()
-                
-    pilha = ({'q'}, terminais, variaveis.union(terminais), f_transicao, gramatica[3])
+
+    pilha = ({'q'}, terminais, variaveis.union(
+        terminais), f_transicao, gramatica[3])
     return pilha
 
-## 42 Forma Normal de Greibach - Passo 2 - Rodrigo Meira Lima de Campos
+# 42 Forma Normal de Greibach - Passo 2 - Rodrigo Meira Lima de Campos
+
 
 def fng_e2(gramatica):
     variaveis = gramatica[0]
     terminais = gramatica[1]
     producoes = gramatica[2]
     inicio = gramatica[3]
-   
 
-    for t in producoes: 
-        var1 = t[0] 
-        var2 = t[1] 
-        for s in var2: 
+    for t in producoes:
+        var1 = t[0]
+        var2 = t[1]
+        for s in var2:
             r = int(var1[1])
             sub = ''
-            for j in s: 
-                sub = sub + j 
-                if str.isdigit(j): 
+            for j in s:
+                sub = sub + j
+                if str.isdigit(j):
                     s = int(j)
-                    if r > s: 
-                        for j2 in var2: 
-                                if str(s) in j2:
-                                    tupla_direita = t[1] 
-                                    for i in range(0,len(tupla_direita)): 
-                                        temp = tupla_direita[i] 
-                                       
-                                        
-                                    
-                                    
+                    if r > s:
+                        for j2 in var2:
+                            if str(s) in j2:
+                                tupla_direita = t[1]
+                                for i in range(0, len(tupla_direita)):
+                                    temp = tupla_direita[i]
+
                     else:
-                        break 
+                        break
 
-    return gramatica = (variaveis, terminais, producoes, 'A1')
-
+    gramatica = (variaveis, terminais, producoes, 'A1')
+    return gramatica
 
     regular_direita = False
     regular_esquerda = False
@@ -116,14 +115,14 @@ def fng_e2(gramatica):
                     if variavel > 1:
                         return 'A gramatica contem mais do que uma variavel como derivacao de uma das producoes, logo nao e regular.'
             if temp2 in temp1[0]:
-                regular_esquerda = True    
+                regular_esquerda = True
                 continue
             elif temp2 in temp1[-1]:
                 regular_direita = True
                 continue
             else:
                 return 'A gramatica nao e regular. Contem uma variavel que nao fica a direita e nem a esquerda.'
-            
+
     if regular_esquerda and not regular_direita:
         return 'A gramatica e regular a esquerda.'
     elif regular_direita and not regular_esquerda:
@@ -168,17 +167,21 @@ def fng_e1(gramatica):
     # TODO
     return gramatica
 
+
 def fng_e2(gramatica):
     # TODO
     return gramatica
+
 
 def fng_e3(gramatica):
     # TODO
     return gramatica
 
+
 def fng_e4(gramatica):
     # TODO
     return gramatica
+
 
 def fng(gramatica):
     # 1 - Renomeia as variáveis em forma crescente
@@ -196,13 +199,13 @@ def fng(gramatica):
     return etapa4
 
 
-#Implementação número 25
-#Aluno: Ricardo Buçard de Castro
+# Implementação número 25
+# Aluno: Ricardo Buçard de Castro
 def lmd(gramatica, palavra):
     palavra = str(palavra)
     palavra_aux = palavra
     producao_str = []
-    inicial = gramatica[3].pop()
+    inicial = gramatica[3]
     saida = []
     saida.append(inicial)
     mensagem_saida = inicial
@@ -210,11 +213,11 @@ def lmd(gramatica, palavra):
     for producao in gramatica[2]:
         if type(producao[1]) == tuple:
             prod = str(producao[1])
-            prod = prod.replace("(","")
-            prod = prod.replace(")","")
-            prod = prod.replace("'","")
-            prod = prod.replace(",","")
-            prod = prod.replace(" ","")
+            prod = prod.replace("(", "")
+            prod = prod.replace(")", "")
+            prod = prod.replace("'", "")
+            prod = prod.replace(",", "")
+            prod = prod.replace(" ", "")
             producao_str.append(prod)
         else:
             prod = str(producao[1])
@@ -233,18 +236,20 @@ def lmd(gramatica, palavra):
                 if palavra_aux == producao:
                     mensagem_saida = mensagem_saida.replace("S", producao)
                     saida.append(mensagem_saida)
-            palavra_aux = palavra_aux.replace(palavra_aux,"")
+            palavra_aux = palavra_aux.replace(palavra_aux, "")
     for s in saida:
-    if saida.index(s) == 0:
-        producao = s[0]
-        mensagem = producao
-    else:
-        producao = s
-        mensagem += " => " + producao
+        if saida.index(s) == 0:
+            producao = s[0]
+            mensagem = producao
+        else:
+            producao = s
+            mensagem += " => " + producao
     return mensagem
 
-#Implementação número 26
-#Aluno: Ricardo Buçard de Castro
+# Implementação número 26
+# Aluno: Ricardo Buçard de Castro
+
+
 def rmd(gramatica, palavra):
     palavra = str(palavra)
     palavra_aux = palavra
@@ -257,11 +262,11 @@ def rmd(gramatica, palavra):
     for producao in gramatica[2]:
         if type(producao[1]) == tuple:
             prod = str(producao[1])
-            prod = prod.replace("(","")
-            prod = prod.replace(")","")
-            prod = prod.replace("'","")
-            prod = prod.replace(",","")
-            prod = prod.replace(" ","")
+            prod = prod.replace("(", "")
+            prod = prod.replace(")", "")
+            prod = prod.replace("'", "")
+            prod = prod.replace(",", "")
+            prod = prod.replace(" ", "")
             producao_str.append(prod)
         else:
             prod = str(producao[1])
@@ -280,21 +285,21 @@ def rmd(gramatica, palavra):
                 if palavra_aux == producao:
                     mensagem_saida = mensagem_saida.replace("S", producao)
                     saida.append(mensagem_saida)
-            palavra_aux = palavra_aux.replace(palavra_aux,"")
+            palavra_aux = palavra_aux.replace(palavra_aux, "")
     for s in saida:
-    if saida.index(s) == 0:
-        producao = s[0]
-        mensagem = producao
-    else:
-        producao = s
-        mensagem += " => " + producao
+        if saida.index(s) == 0:
+            producao = s[0]
+            mensagem = producao
+        else:
+            producao = s
+            mensagem += " => " + producao
     return mensagem
 
 
-def vazia(gramatica): 
-   simbolos_geradores = geradores(gramatica)
-   simbolo_inicial = gramatica[3]
-   if (simbolo_inicial not in simbolos_geradores):
-      print("A GLC é vazia")
-   else:
-      print("A GLC não é vazia")
+def vazia(gramatica):
+    simbolos_geradores = geradores(gramatica)
+    simbolo_inicial = gramatica[3]
+    if (simbolo_inicial not in simbolos_geradores):
+        print("A GLC é vazia")
+    else:
+        print("A GLC não é vazia")
