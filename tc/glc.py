@@ -263,7 +263,7 @@ def lmd(gramatica, palavra):
     palavra = str(palavra)
     palavra_aux = palavra
     producao_str = []
-    inicial = gramatica[3].pop()
+    inicial = gramatica[3]
     saida = []
     saida.append(inicial)
     mensagem_saida = inicial
@@ -296,12 +296,12 @@ def lmd(gramatica, palavra):
                     saida.append(mensagem_saida)
             palavra_aux = palavra_aux.replace(palavra_aux,"")
     for s in saida:
-    if saida.index(s) == 0:
-        producao = s[0]
-        mensagem = producao
-    else:
-        producao = s
-        mensagem += " => " + producao
+        if saida.index(s) == 0:
+            producao = s[0]
+            mensagem = producao
+        else:
+            producao = s
+            mensagem += " => " + producao
     return mensagem
 
 #Implementação número 26
@@ -310,7 +310,7 @@ def rmd(gramatica, palavra):
     palavra = str(palavra)
     palavra_aux = palavra
     producao_str = []
-    inicial = gramatica[3].pop()
+    inicial = gramatica[3]
     saida = []
     saida.append(inicial)
     mensagem_saida = inicial
@@ -343,14 +343,13 @@ def rmd(gramatica, palavra):
                     saida.append(mensagem_saida)
             palavra_aux = palavra_aux.replace(palavra_aux,"")
     for s in saida:
-    if saida.index(s) == 0:
-        producao = s[0]
-        mensagem = producao
-    else:
-        producao = s
-        mensagem += " => " + producao
+        if saida.index(s) == 0:
+            producao = s[0]
+            mensagem = producao
+        else:
+            producao = s
+            mensagem += " => " + producao
     return mensagem
-
 
 def vazia(gramatica): 
    simbolos_geradores = geradores(gramatica)
