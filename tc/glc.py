@@ -89,12 +89,61 @@ def geradores(gramatica):
 
 # 28 - Gramática Regular
 # Dennis Rodrigues
+# Gabriel Souto
+# 28 Gramática Regular
 def regular(gramatica):
-    producoes = gramatica[2]
-    terminais = gramatica[1]
-    variaveis = gramatica[0]
     
-    ## 29 Transformação de GR para AF (Autômato com Pilha) - Rodrigo Meira Lima de Campos
+    variaveis = gramatica[0]
+    terminais = gramatica[1]
+    producoes = gramatica[2]
+    gld = False
+    gle = False
+    variavel = variaveis.pop()
+    variaveis.add(variavel)
+    mensagem = ''
+
+    if len(variaveis) > 1:
+        mensagem = "Gramatica não Regular"
+    else:
+        # Gramatica regular
+        for producao in producoes:
+            if not (isinstance(producao[1], int) or isinstance(producao[1], str)) and producao[1]: 
+                corpo_producao = producao[1]
+                print(corpo_producao)
+                if corpo_producao.count(variavel) == 1:
+                    if corpo_producao[0] in variaveis: 
+                        gle = True
+                    else:
+                        gle = False
+                        break
+                else:
+                    gle = False
+                    break
+
+        for producao in producoes:
+            if not (isinstance(producao[1], int) or isinstance(producao[1], str)) and producao[1]: 
+                corpo_producao = producao[1]
+                if corpo_producao.count(variavel) == 1:
+                    if corpo_producao[-1] in variaveis:
+                        gld = True
+                    else:
+                        gld = False
+                        break
+                else:
+                    gld = False
+                    break
+
+        if gle:
+            mensagem = 'Gramática Linear à Esquerda'
+        elif gld:
+            mensagem = 'Gramática Linear à Direita'
+        elif not gld and not gle:
+            mensagem = 'Gramatica não Regular'
+
+    return mensagem
+
+## 29 - Transformação de GR para AF (Autômato com Pilha)
+# Rodrigo Meira Lima de Campos
 
 def gr2afn(gramatica):
     variaveis = gramatica[0] 
