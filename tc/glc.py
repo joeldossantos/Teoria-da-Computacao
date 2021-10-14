@@ -24,7 +24,68 @@ def afd2gr(automato):
         conjunto_terminais = [(final, '')]
         aux = set(conjunto_terminais)
         P.update(conjunto_terminais)
+        
+## 31 - Descoberta de Simbolos Geradores (Ramon Grande Da Luz Bouças)
+def simbolo_gerador(gramatica,simbolo,fila):
+    print (fila)
+    V,T,P,S = gramatica
+    
+    ## se o símbolo analisado for um terminal, ele é gerador
+    if simbolo in T:
+        return True
+    
+    ## temos uma fila de simbolos aguardando decisao, e se formos analisar um simbolo que está aguardando decisão 
+    ## caimos em uma recursao sem limite, por isso, nesses casos precisamos considerar o simbolo como falso temporariamente
+    ## para poder analisar outras produçoes
+    if simbolo in fila:
+        return False
+    
+    ## se o simbolo já foi adicionado antes no conjunto dos geradores, ele é gerador
+    ## (idéia de programação dinâmica pra não analisar varias vezes o mesmo simbolo)
+    #if simbolo in conjunto_geradores: 
+     #   return True
+    
+    ## pega todas as produçoes em que o simbolo analisado é a cabeça
+    lista_producoes = [prod for prod in P if prod[0] == simbolo]
+    
+    ## analisa todas as produçoes para ver se há PELO MENOS UMA produção que atende as condições necessárias
+    for producao in lista_producoes:
+        corpo = producao[1]
+        ## analisa os simbolos da produção para ver se TODOS os símbolos são geradores
+        for simb in corpo:
+            ## chama a função de forma recursiva para saber se o simbolo é gerador
+            resp = simbolo_gerador(gramatica,simb,fila | {simbolo})
+            if(resp == False):
+                ## se algum simbolo do corpo da produção não é gerador
+                ## a produção não serve para mostrar que a cabeça é geradora
+                ## então passamos a analisar a proxima produção
+                continue
+        ## se chegamos aqui, achamos uma produção em que todos os simbolos sao geradores,
+        ## então retornamos True, para indicar que a palavra é geradora
+        return True
+    
+    return False   
 
+def geradores(gramatica):
+    ## decompoe a gramatica em variáveis, terminais, produçoes e simbolo inicial
+    V,T,P,S = gramatica
+
+    ## inicializa um conjunto vazio que será preenchido com os símbolos geradores
+    simbolos_geradores = set({})
+    
+    
+    for variavel in V:
+        ## verifica se a variavel é geradora
+        resp = simbolo_gerador(gramatica,variavel,fila = set({}))
+        
+        ## caso a variavel seja geradora, adiciona ela ao conjunto de simbolos geradores
+        if(resp == True):
+            simbolos_geradores = simbolos_geradores | {variavel}
+        
+    ## adiciona todas os terminais no conjunto de simbolos geradores    
+    simbolos_geradores = simbolos_geradores | T
+    
+    return simbolos_geradores
 
 # 28 - Gramática Regular
 # Dennis Rodrigues
@@ -254,7 +315,7 @@ def rmd(gramatica, palavra):
     palavra = str(palavra)
     palavra_aux = palavra
     producao_str = []
-    inicial = gramatica[3].pop()
+    inicial = gramatica[3]
     saida = []
     saida.append(inicial)
     mensagem_saida = inicial
@@ -296,10 +357,10 @@ def rmd(gramatica, palavra):
     return mensagem
 
 
-def vazia(gramatica):
-    simbolos_geradores = geradores(gramatica)
-    simbolo_inicial = gramatica[3]
-    if (simbolo_inicial not in simbolos_geradores):
-        print("A GLC é vazia")
-    else:
-        print("A GLC não é vazia")
+def vazia(gramatica): 
+   simbolos_geradores = geradores(gramatica)
+   simbolo_inicial = gramatica[3]
+   if (simbolo_inicial not in simbolos_geradores):
+      print("A GLC é vazia")
+   else:
+      print("A GLC não é vazia")

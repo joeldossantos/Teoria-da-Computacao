@@ -159,20 +159,21 @@ def printw(expreg):
 #@Ricardo Buçard de Castro
 
 def afn2er_qi(automato, estado):
-  estados_anteriores = set()
-  indice = 0
-  encontrado = False
-  listaDelta = list(automato[2].values())
-  for chave in automato[2]:
-    if encontrado == False:
-      estados_anteriores.add(chave[0])
-      for estado_destino in listaDelta[indice]:
-        if estado == estado_destino:
-          encontrado = True
-          break
-      indice+=1
-    else:
-      break
+    estados_anteriores = set()
+    indice = 0
+    encontrado = False
+    listaDelta = list(automato[2].values())
+    for chave in automato[2]:
+        if encontrado == False:
+            estados_anteriores.add(chave[0])
+            for estado_destino in listaDelta[indice]:
+                if estado == estado_destino:
+                    encontrado = True
+                break
+            indice+=1
+        else:
+            break
+    return estados_anteriores
 
 # Implementação 16
 # Dennis Santos Rodrigues
@@ -295,6 +296,7 @@ def afn2er_rij(automato, estado, anterior, posterior):
                     if e == posterior:
                         simbolo = funcao[1]
                         tuplas.append(tuple((anterior, simbolo)))
+                        #tuplas.append(simbolo)
             num += 1
 
         return tuplas
@@ -307,36 +309,36 @@ def afn2er_s(automato, estado):
     anteriores = afn2er_qi(automato, estado)
     posteriores = afn2er_pi(automato, estado)
     
-
     for ant in anteriores:
         if estado != ant:
             for pos in posteriores:
                 if estado != pos:
-                    automato[2][afn2er_rij(automato, estado, ant, pos)] = {pos}
-    
+                    automato[2][afn2er_rij(automato, estado, ant, pos)[0]] = {pos}
     automato[0].remove(estado)
-    for k, v in automato[2]:
+    for k, v in list(automato[2].items()):
         if estado in k:
             automato[2].pop(k)
         if estado == v:
             automato[2].pop(k)
+    return automato[2]
 
 #Implementação 19
 #@Pedro Henrique Gomes Telles
 def afn2er(automato):
     estado_ini = automato[3]
     estado_fim = automato[4]
-    for estado in automato[0]:
+    automato_aux = automato[0]
+    for estado in automato_aux:
         if estado != estado_ini and estado != estado_fim:
             afn2er_s(automato, estado)
     
-    if estado_ini not in automato[2][estado_ini].value:
-        expreg = automato[2][estado_ini][1]
+    if estado_ini not in automato[2].items():
+        expreg = automato[2][(estado_ini, 0)]
 
-    if estado_ini in automato[2][estado_ini].value:
-        expreg = ('*', automato[2][estado_ini][1]) + expreg
+    if estado_ini in automato[2].items():
+        expreg = ('*', automato[2][(estado_ini, 0)])
 
-    if estado_fim in automato[2][estado_fim].value:
-        expreg += (('*', automato[2][estado_fim][1]))
+    if estado_fim in automato[2].items():
+        expreg += (('*', automato[2][(estado_ini, 0)]))
 
     return expreg
