@@ -113,3 +113,37 @@ def computacaoComParada(mt, palavra):
 
   return palavraFinal, aceito
 
+
+
+def move_fila(fila, ponteiro, direcao, branco='B'):
+  new_fila = fila
+  new_ponteiro = ponteiro
+
+  if direcao == 'L':
+    new_ponteiro = ponteiro - 1
+    if new_ponteiro < 0:
+      new_ponteiro = 0
+      new_fila = [branco, *fila]
+    
+  if direcao == 'R':
+    new_ponteiro = ponteiro + 1
+    if new_ponteiro >= len(fila):
+      new_fila = [*fila, branco]
+    
+  return new_fila, new_ponteiro
+
+def movimento(mt, palavra):
+  fila = [*palavra]
+  estado_atual = mt[4]
+  estados_finais = mt[-1]
+  ponteiro = 0
+  branco = mt[5]
+
+  while estado_atual not in estados_finais:
+    result = delta(mt, estado_atual, fila[ponteiro])
+    estado_atual, new_symbol, direcao = result
+
+    fila[ponteiro] = new_symbol
+    fila, ponteiro = move_fila(fila, ponteiro, direcao)
+
+  return fila
