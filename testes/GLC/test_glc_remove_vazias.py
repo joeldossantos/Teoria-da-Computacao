@@ -36,8 +36,8 @@ def test_remove_vazias():
                 {('S', ('S', '+', 'S')), ('S', (1)), ('S', ('a'))}, 
                 'S')
     
-    assert glc.remove_vazias( gramatica_a == gramatica_a_testada )
-    assert glc.remove_vazias( gramatica_b == gramatica_b_testada )
-    assert glc.remove_vazias( gramatica_c == gramatica_c_testada )
+    assert glc.remove_vazias(gramatica_a) == gramatica_a_testada
+    assert glc.remove_vazias(gramatica_b) == gramatica_b_testada
+    assert glc.remove_vazias(gramatica_c) == gramatica_c_testada
     
     
