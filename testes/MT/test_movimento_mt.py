@@ -27,7 +27,7 @@ def test_movimento_mt():
     assert(mt.movimento(mt_exp.M2,'11101')) == (['1', '0', '1', '1', '1', 'B', 'B', 'B', 'B', 'B', 'B'])
 
 
-    # Testando a função 'movimento' - Gustavo Pettine
+    # (83) Testando a função 'movimento' - Gustavo Pettine
     assert(mt.movimento(mt_exp.M,'10101')) == (['X', '0', '1', '0', '1'])
     assert(mt.movimento(mt_exp.M,'1010110')) == (['X', '0', '1', '0', '1', '1', '0'])
     assert(mt.movimento(mt_exp.M,'101011011')) == (['X', '0', '1', '0', '1', '1', '0', '1', '1'])
