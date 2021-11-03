@@ -1,5 +1,9 @@
 import tc.glc as glc
 
+#ALUNO : ADEOYE SUNDAY LADELE 
+#TESTE DA FUNCAO GERADORES()
+#IMPLEMENTACAO 66
+
 V = {'E', 'I'}
 T = {'+', '*', '-', '(', ')', 'a', 'b', '0', '1'}
 P = {('E', ('I')),
