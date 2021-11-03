@@ -1,5 +1,8 @@
 import random
 
+#from tc.ap import movimento
+from mt2 import *
+
 ## Troca 0's por 1's (possui transicao sem movimento)
 Q1 = {'q0', 'q1', 'q2'}
 S1 = {'0', '1'}
@@ -85,3 +88,12 @@ M3 = (Q3, S3, G3, D3, 'q0', 'B', {'q11'})
 palavra = '1010110'
 
 
+
+Q = {'q0 ', 'q1 '}
+S = {'0', '1'}
+G = {'0', '1', 'X'}
+D = {
+   ('q0 ', '1'): ('q1 ', 'X', 'R'),
+   ('q0 ', '0'): ('q0 ', 'X', 'R')}
+
+M = (Q, S, G, D, 'q0 ', 'B', {'q1 '})
