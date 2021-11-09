@@ -1,4 +1,7 @@
-﻿# Transformação de AF para GR
+﻿import itertools
+
+
+# Transformação de AF para GR
 
 def afd2gr(automato):
     V = set()
@@ -410,3 +413,67 @@ def vazia(gramatica):
       print("A GLC é vazia")
    else:
       print("A GLC não é vazia")
+
+
+
+#36 Descoberta de Pares Unitários
+#Marcos Eduardo Carvalho Teixeira
+def unitarios(gramatica):
+    variaveis, terminais, producoes, simboloInicial = gramatica
+
+    pares = list([])
+    paresBase  = []
+
+    variaveisLista = list(variaveis)
+    producoesList = list(producoes)
+
+    for vari in variaveisLista:
+        paresBase.append((vari,vari))
+
+    for prod in producoesList:
+        if len(prod[1])==1 and prod[1] in variaveisLista:
+            pares.append((prod[0], prod[1])) 
+
+    permutacoes = list(itertools.permutations(pares))
+
+    paresSeq = []
+    for p in permutacoes:
+        aux = p[0]
+        seq = [aux]
+        for t in p:
+            if aux[1] == t[0]:
+                seq.append(t)
+                aux = t
+        cabeca = seq[0]
+        cauda = seq[-1]
+        tupla = (cabeca[0],cauda[1])
+        paresSeq.append(tupla)
+
+    return set(paresSeq + paresBase + pares)
+
+
+#37 Eliminação de Produções Unitárias
+#Marcos Eduardo Carvalho Teixeira
+def remove_unitarias(gramatica):
+
+    variaveis, terminais, producoes, simboloInicial = gramatica
+
+    variaveisLista = list(variaveis)
+    producoesList = list(producoes)
+
+    paresUnitarios = unitarios(G)
+
+
+    prodUniDiretas = producoesList.copy()
+    for prod in prodUniDiretas:
+        if len(prod[1])==1 and prod[1] in variaveisLista:
+            prodUniDiretas.remove(prod)
+
+
+    producoesNovas = []
+    for par in paresUnitarios:
+        for prod in prodUniDiretas:
+            if par[1]==prod[0]:
+                producoesNovas.append((par[0], prod[1]))
+
+    return (variaveis,terminais,set(producoesNovas),'S')
