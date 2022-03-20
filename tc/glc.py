@@ -91,7 +91,7 @@ def geradores(gramatica):
     return simbolos_geradores
 
 # 28 - Gramática Regular
-# Algoritmo reescrito por Gabriel Lima de Souza, pois não atendia nenhum requisito.
+# Algoritmo reescrito por Gabriel Lima de Souza em 2022, pois não atendia nenhum requisito.
 # Código antigo por Dennis Rodrigues
 # Código antigo por Gabriel Souto
 # 28 Gramática Regular

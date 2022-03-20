@@ -1,3 +1,5 @@
+#Testes feitos por Gabriel Lima de Souza em 2022
+
 from tc import glc
 
 def test_glc_regular():
