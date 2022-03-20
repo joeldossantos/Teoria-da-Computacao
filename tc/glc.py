@@ -92,8 +92,8 @@ def geradores(gramatica):
 
 # 28 - Gramática Regular
 # Algoritmo reescrito por Gabriel Lima de Souza, pois não atendia nenhum requisito.
-# Dennis Rodrigues
-# Gabriel Souto
+# Código antigo por Dennis Rodrigues
+# Código antigo por Gabriel Souto
 # 28 Gramática Regular
 def regular(gramatica):
     # print("USANDO ORIGINAL")
@@ -118,10 +118,16 @@ def regular(gramatica):
                 return "Gramatica não Regular"
             elif aparicoes == 1:
                 if lado_direito[len(lado_direito) - 1] == variavel:
-                    gld = True
+                    if gle == True:
+                        return "Gramatica não Regular"
+                    else:
+                        gld = True
                     # print("Vai ser direita")
                 elif lado_direito[0] == variavel:
-                    gle = True
+                    if gld == True:
+                        return "Gramatica não Regular"
+                    else:
+                       gle = True
                     # print("Vai ser esquerda")
                 else:
                     return "Gramatica não Regular"
