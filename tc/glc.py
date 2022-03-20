@@ -91,58 +91,50 @@ def geradores(gramatica):
     return simbolos_geradores
 
 # 28 - Gramática Regular
+# Algoritmo reescrito por Gabriel Lima de Souza, pois não atendia nenhum requisito.
 # Dennis Rodrigues
 # Gabriel Souto
 # 28 Gramática Regular
 def regular(gramatica):
+    # print("USANDO ORIGINAL")
     variaveis = gramatica[0]
     terminais = gramatica[1]
     producoes = gramatica[2]
     gld = False
     gle = False
-    variavel = variaveis.pop()
-    variaveis.add(variavel)
-    mensagem = ''
 
-    if len(variaveis) > 1:
-        mensagem = "Gramatica não Regular"
+    for producao in producoes:
+        lado_direito = None
+        if isinstance(producao[1], tuple) or  isinstance(producao[1], list) or isinstance(producao[1], str):
+            lado_direito = producao[1]
+        else:
+            lado_direito = [producao[1]]
+
+        
+        for variavel in variaveis:
+            # print(variavel, " aparece ", producao[1].count(variavel), " vezes")
+            aparicoes = lado_direito.count(variavel)
+            if aparicoes > 1:
+                return "Gramatica não Regular"
+            elif aparicoes == 1:
+                if lado_direito[len(lado_direito) - 1] == variavel:
+                    gld = True
+                    # print("Vai ser direita")
+                elif lado_direito[0] == variavel:
+                    gle = True
+                    # print("Vai ser esquerda")
+                else:
+                    return "Gramatica não Regular"
+                
+        # print("\n")
+
+    if gld == True and gle == False:
+        return "Gramática Linear à Direita"
+    elif gle == True and gld == False:
+        return "Gramática Linear à Esquerda"
     else:
-        # Gramatica regular
-        for producao in producoes:
-            if not (isinstance(producao[1], int) or isinstance(producao[1], str)) and producao[1]: 
-                corpo_producao = producao[1]
-                print(corpo_producao)
-                if corpo_producao.count(variavel) == 1:
-                    if corpo_producao[0] in variaveis: 
-                        gle = True
-                    else:
-                        gle = False
-                        break
-                else:
-                    gle = False
-                    break
+        return "Gramatica não Regular"
 
-        for producao in producoes:
-            if not (isinstance(producao[1], int) or isinstance(producao[1], str)) and producao[1]: 
-                corpo_producao = producao[1]
-                if corpo_producao.count(variavel) == 1:
-                    if corpo_producao[-1] in variaveis:
-                        gld = True
-                    else:
-                        gld = False
-                        break
-                else:
-                    gld = False
-                    break
-
-        if gle:
-            mensagem = 'Gramática Linear à Esquerda'
-        elif gld:
-            mensagem = 'Gramática Linear à Direita'
-        elif not gld and not gle:
-            mensagem = 'Gramatica não Regular'
-
-    return mensagem
 
 ## 29 - Transformação de GR para AF (Autômato com Pilha)
 # Rodrigo Meira Lima de Campos
