@@ -403,14 +403,86 @@ def rmd(gramatica, palavra):
             mensagem += " => " + producao
     return mensagem
 
-
+#Algoritmo reescrito por Gabriel Lima de Souza em 2022
 def vazia(gramatica): 
-   simbolos_geradores = geradores(gramatica)
-   simbolo_inicial = gramatica[3]
-   if (simbolo_inicial not in simbolos_geradores):
-      print("A GLC é vazia")
-   else:
-      print("A GLC não é vazia")
+    variaveis = gramatica[0]
+    terminais = gramatica[1]
+    producoes = gramatica[2]
+    inicial = gramatica[3]
+
+    var_marcadas = terminais
+
+    # print("Variaveis: ", variaveis)
+    # print("Terminais: ", terminais)
+    # print("Producoes: ", producoes)
+
+    # print("Inicial: ", inicial)
+
+    # # var_marcadas.add('S')
+
+    # print("Variaveis Marcadas: ", var_marcadas)
+
+    # print("\n\n\n")
+
+    continua_checagem = True
+
+    while continua_checagem:
+        continua_checagem = False
+        for var_atual in variaveis:
+            marca_var_atual = True
+            # print("Variável atual: ",  var_atual)
+
+            if var_atual in var_marcadas:
+                # var_marcadas.append(var_atual)
+                # print("Pulando variavel ", var_atual, " ja marcada")
+                continue
+
+            for producao in producoes:
+
+                #Variáveis para facilitar leitura da produção
+                ld_esq = producao[0]
+                ld_dir= None
+                if isinstance(producao[1], tuple) or  isinstance(producao[1], list) or isinstance(producao[1], str):
+                    ld_dir = producao[1]
+                else:
+                    ld_dir = [producao[1]]
+                
+                
+
+                if ld_esq == var_atual:
+
+                    # print("Produção atual: ", producao)
+                    # print("Lado direito marcado: ", set(ld_dir).issubset(var_marcadas))
+
+                    if set(ld_dir).issubset(var_marcadas) == False:
+                        # print("NÃO VAI MARCAR")
+                        marca_var_atual = False
+                        break
+
+                    # print("\n")
+
+            if marca_var_atual:
+                var_marcadas.add(var_atual)
+                continua_checagem = True
+            # print("\n\n")
+
+
+            # print("Variaveis Marcadas:", var_marcadas)
+
+    # print("É vazia? ", (inicial in var_marcadas))
+
+    if inicial in var_marcadas:
+        return "A GLC não é vazia"
+    
+    return "A GLC é vazia"
+
+
+#    simbolos_geradores = geradores(gramatica)
+#    simbolo_inicial = gramatica[3]
+#    if (simbolo_inicial not in simbolos_geradores):
+#       print("A GLC é vazia")
+#    else:
+#       print("A GLC não é vazia")
 
 
 
