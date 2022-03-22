@@ -91,58 +91,56 @@ def geradores(gramatica):
     return simbolos_geradores
 
 # 28 - Gramática Regular
-# Dennis Rodrigues
-# Gabriel Souto
+# Algoritmo reescrito por Gabriel Lima de Souza em 2022, pois não atendia nenhum requisito.
+# Código antigo por Dennis Rodrigues
+# Código antigo por Gabriel Souto
 # 28 Gramática Regular
 def regular(gramatica):
+    # print("USANDO ORIGINAL")
     variaveis = gramatica[0]
     terminais = gramatica[1]
     producoes = gramatica[2]
     gld = False
     gle = False
-    variavel = variaveis.pop()
-    variaveis.add(variavel)
-    mensagem = ''
 
-    if len(variaveis) > 1:
-        mensagem = "Gramatica não Regular"
-    else:
-        # Gramatica regular
-        for producao in producoes:
-            if not (isinstance(producao[1], int) or isinstance(producao[1], str)) and producao[1]: 
-                corpo_producao = producao[1]
-                print(corpo_producao)
-                if corpo_producao.count(variavel) == 1:
-                    if corpo_producao[0] in variaveis: 
-                        gle = True
+    for producao in producoes:
+        lado_direito = None
+        if isinstance(producao[1], tuple) or  isinstance(producao[1], list) or isinstance(producao[1], str):
+            lado_direito = producao[1]
+        else:
+            lado_direito = [producao[1]]
+
+        
+        for variavel in variaveis:
+            # print(variavel, " aparece ", producao[1].count(variavel), " vezes")
+            aparicoes = lado_direito.count(variavel)
+            if aparicoes > 1:
+                return "Gramatica não Regular"
+            elif aparicoes == 1:
+                if lado_direito[len(lado_direito) - 1] == variavel:
+                    if gle == True:
+                        return "Gramatica não Regular"
                     else:
-                        gle = False
-                        break
-                else:
-                    gle = False
-                    break
-
-        for producao in producoes:
-            if not (isinstance(producao[1], int) or isinstance(producao[1], str)) and producao[1]: 
-                corpo_producao = producao[1]
-                if corpo_producao.count(variavel) == 1:
-                    if corpo_producao[-1] in variaveis:
                         gld = True
+                    # print("Vai ser direita")
+                elif lado_direito[0] == variavel:
+                    if gld == True:
+                        return "Gramatica não Regular"
                     else:
-                        gld = False
-                        break
+                       gle = True
+                    # print("Vai ser esquerda")
                 else:
-                    gld = False
-                    break
+                    return "Gramatica não Regular"
+                
+        # print("\n")
 
-        if gle:
-            mensagem = 'Gramática Linear à Esquerda'
-        elif gld:
-            mensagem = 'Gramática Linear à Direita'
-        elif not gld and not gle:
-            mensagem = 'Gramatica não Regular'
+    if gld == True and gle == False:
+        return "Gramática Linear à Direita"
+    elif gle == True and gld == False:
+        return "Gramática Linear à Esquerda"
+    else:
+        return "Gramatica não Regular"
 
-    return mensagem
 
 ## 29 - Transformação de GR para AF (Autômato com Pilha)
 # Rodrigo Meira Lima de Campos
@@ -405,14 +403,86 @@ def rmd(gramatica, palavra):
             mensagem += " => " + producao
     return mensagem
 
-
+#Algoritmo reescrito por Gabriel Lima de Souza em 2022
 def vazia(gramatica): 
-   simbolos_geradores = geradores(gramatica)
-   simbolo_inicial = gramatica[3]
-   if (simbolo_inicial not in simbolos_geradores):
-      print("A GLC é vazia")
-   else:
-      print("A GLC não é vazia")
+    variaveis = gramatica[0]
+    terminais = gramatica[1]
+    producoes = gramatica[2]
+    inicial = gramatica[3]
+
+    var_marcadas = terminais
+
+    # print("Variaveis: ", variaveis)
+    # print("Terminais: ", terminais)
+    # print("Producoes: ", producoes)
+
+    # print("Inicial: ", inicial)
+
+    # # var_marcadas.add('S')
+
+    # print("Variaveis Marcadas: ", var_marcadas)
+
+    # print("\n\n\n")
+
+    continua_checagem = True
+
+    while continua_checagem:
+        continua_checagem = False
+        for var_atual in variaveis:
+            marca_var_atual = True
+            # print("Variável atual: ",  var_atual)
+
+            if var_atual in var_marcadas:
+                # var_marcadas.append(var_atual)
+                # print("Pulando variavel ", var_atual, " ja marcada")
+                continue
+
+            for producao in producoes:
+
+                #Variáveis para facilitar leitura da produção
+                ld_esq = producao[0]
+                ld_dir= None
+                if isinstance(producao[1], tuple) or  isinstance(producao[1], list) or isinstance(producao[1], str):
+                    ld_dir = producao[1]
+                else:
+                    ld_dir = [producao[1]]
+                
+                
+
+                if ld_esq == var_atual:
+
+                    # print("Produção atual: ", producao)
+                    # print("Lado direito marcado: ", set(ld_dir).issubset(var_marcadas))
+
+                    if set(ld_dir).issubset(var_marcadas) == False:
+                        # print("NÃO VAI MARCAR")
+                        marca_var_atual = False
+                        break
+
+                    # print("\n")
+
+            if marca_var_atual:
+                var_marcadas.add(var_atual)
+                continua_checagem = True
+            # print("\n\n")
+
+
+            # print("Variaveis Marcadas:", var_marcadas)
+
+    # print("É vazia? ", (inicial in var_marcadas))
+
+    if inicial in var_marcadas:
+        return "A GLC não é vazia"
+    
+    return "A GLC é vazia"
+
+
+#    simbolos_geradores = geradores(gramatica)
+#    simbolo_inicial = gramatica[3]
+#    if (simbolo_inicial not in simbolos_geradores):
+#       print("A GLC é vazia")
+#    else:
+#       print("A GLC não é vazia")
 
 
 
